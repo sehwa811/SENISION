@@ -9,7 +9,8 @@ export default function SignUpScreen({navigation}: any) {
       <View>
         <Button
           title="전화번호로 시작하기"
-          onPress={() => navigation.navigate("Verify")}></Button>
+          onPress={() => navigation.navigate("Verify")}
+        />
       </View>
       <View>
         <Text>SNS 계정으로 간편 가입하기</Text>
@@ -17,6 +18,11 @@ export default function SignUpScreen({navigation}: any) {
       <View>
         <Text>로그인에 어려움이 있나요?</Text>
       </View>
+
+      <Button
+        title="초기정보 입력"
+        onPress={() => navigation.navigate("GetupTime")}
+      />
     </View>
   );
 }
