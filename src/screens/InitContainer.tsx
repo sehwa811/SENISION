@@ -13,6 +13,7 @@ import GetupTime from "./InitialInfo/GetupTime";
 import BreakfastTime from "./InitialInfo/BreakfastTime";
 import LunchTime from "./InitialInfo/LunchTime";
 import DinnerTime from "./InitialInfo/DinnerTime";
+import BodyCheck from "./InitialInfo/BodyCheck";
 
 export type StackScreenList = {
   Login: undefined;
@@ -24,36 +25,44 @@ export type StackScreenList = {
 const Stack = createNativeStackNavigator();
 
 export default function InitContainer(): JSX.Element {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   const isSignedUp = true;
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {isLoggedIn ? (
-          <Stack.Group>
-            <Stack.Screen name="NameInput" component={NameInput}></Stack.Screen>
-          </Stack.Group>
+        {isSignedUp ? (
+          isLoggedIn ? (
+            <Stack.Group>
+              <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+            </Stack.Group>
+          ) : (
+            <Stack.Group>
+              <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
+            </Stack.Group>
+          )
         ) : (
           <Stack.Group>
             <Stack.Screen name="SignUp" component={SignUpScreen}></Stack.Screen>
             <Stack.Screen
               name="Verify"
               component={VerifyPhoneNumber}></Stack.Screen>
-            <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
+            <Stack.Screen name="NameInput" component={NameInput}></Stack.Screen>
+            <Stack.Screen
+              name="GenderInput"
+              component={GenderInput}></Stack.Screen>
+            <Stack.Screen name="AgeInput" component={AgeInput}></Stack.Screen>
+            <Stack.Screen name="GetupTime" component={GetupTime}></Stack.Screen>
+            <Stack.Screen
+              name="BreakfastTime"
+              component={BreakfastTime}></Stack.Screen>
+            <Stack.Screen name="LunchTime" component={LunchTime}></Stack.Screen>
+            <Stack.Screen
+              name="DinnerTime"
+              component={DinnerTime}></Stack.Screen>
+            <Stack.Screen name="BodyCheck" component={BodyCheck}></Stack.Screen>
           </Stack.Group>
         )}
-        <Stack.Group>
-          <Stack.Screen name="Name" component={NameInput}></Stack.Screen>
-          <Stack.Screen name="Gender" component={GenderInput}></Stack.Screen>
-          <Stack.Screen name="Age" component={AgeInput}></Stack.Screen>
-        </Stack.Group>
-        <Stack.Group>
-          <Stack.Screen name="GetupTime" component={GetupTime}></Stack.Screen>
-          <Stack.Screen name="BreakfastTime" component={BreakfastTime}></Stack.Screen>
-          <Stack.Screen name="LunchTime" component={LunchTime}></Stack.Screen>
-          <Stack.Screen name="DinnerTime" component={DinnerTime}></Stack.Screen>
-        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

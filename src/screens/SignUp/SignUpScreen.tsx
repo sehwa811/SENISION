@@ -21,7 +21,7 @@ export default function SignUpScreen({navigation}: any) {
 
       <Button
         title="초기정보 입력"
-        onPress={() => navigation.navigate("GetupTime")}
+        onPress={() => navigation.navigate("NameInput")}
       />
     </View>
   );

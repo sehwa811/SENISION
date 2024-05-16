@@ -1,16 +1,11 @@
-import { useState } from "react";
-import { Text, View } from "react-native";
-import DatePicker from "react-native-date-picker";
-
+import {useState} from "react";
+import {Text, View} from "react-native";
 
 export default function HomeScreen() {
-    const [date, setDate] = useState(new Date());
-    return (
-        <View>
-            <Text>Home</Text>
-
-
-   <DatePicker date={date} onDateChange={setDate} />
-        </View>
-    )
+  return (
+    <View>
+      <Text>Home</Text>
+      <Text>안녕하세요, 세화님</Text>
+    </View>
+  );
 }
