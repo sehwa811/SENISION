@@ -1,8 +1,14 @@
 import {useState} from "react";
-import {Button, Text, TextInput, View} from "react-native";
+import {Button, StyleSheet, Text, TextInput, View} from "react-native";
 
 export default function VerifyPhoneNumber() {
   const [phoneNumber, onChangeNumber] = useState<string>();
+  const [codeInput, onChangeCodeInput] = useState<string>();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const verifyNumber = () => {
+    setIsVisible(true);
+  };
 
   return (
     <View>
@@ -12,12 +18,31 @@ export default function VerifyPhoneNumber() {
       </View>
       <View>
         <Text>휴대전화 번호</Text>
-        <TextInput
-          value={phoneNumber}
-          onChangeText={onChangeNumber}></TextInput>
-        <Button
-          title="인증번호 받기"
-          onPress={() => console.log("인증번호 전송")}></Button>
+        <TextInput value={phoneNumber} onChangeText={onChangeNumber} />
+
+        <View
+          style={[
+            styles.verifyContainer,
+            {display: isVisible ? "flex" : "none"},
+          ]}>
+          <View>
+            <Text>인증 번호</Text>
+            <Button title="재전송" />
+          </View>
+          <TextInput
+            value={codeInput}
+            maxLength={4}
+            onChangeText={onChangeCodeInput}
+          />
+        </View>
+        {isVisible ? (
+          <View>
+            <Button title="확인" onPress={verifyNumber} />
+            <Button title="취소" onPress={verifyNumber} />
+          </View>
+        ) : (
+          <Button title="인증번호 받기" onPress={verifyNumber} />
+        )}
       </View>
       <View>
         <Text>로그인에 어려움이 있나요?</Text>
@@ -25,3 +50,10 @@ export default function VerifyPhoneNumber() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  verifyRequest: {},
+  verifyContainer: {
+    display: "none",
+  },
+});

@@ -25,8 +25,8 @@ export type StackScreenList = {
 const Stack = createNativeStackNavigator();
 
 export default function InitContainer(): JSX.Element {
-  const isLoggedIn = true;
-  const isSignedUp = true;
+  const isLoggedIn = false;
+  const isSignedUp = false;
 
   return (
     <NavigationContainer>
