@@ -14,7 +14,7 @@ import InitContainer from "./src/screens/InitContainer";
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === "dark";
-
+  
   return <InitContainer />;
 }
 

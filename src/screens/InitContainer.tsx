@@ -14,56 +14,80 @@ import BreakfastTime from "./InitialInfo/BreakfastTime";
 import LunchTime from "./InitialInfo/LunchTime";
 import DinnerTime from "./InitialInfo/DinnerTime";
 import BodyCheck from "./InitialInfo/BodyCheck";
+import {UserProvider} from "../context/UserContext";
 
 export type StackScreenList = {
-  Login: undefined;
-  SignUp: undefined;
-  Home: undefined;
+  Login: undefined | {name: String};
+  SignUp: undefined | {name: String};
+  Verify: undefined;
+  Home: undefined | {name: String};
   NameInput: undefined | {name: String; age: number};
+  GenderInput: {name: string};
+  AgeInput: undefined;
+  GetupTime: undefined;
+  BreakfastTime: undefined;
+  LunchTime: undefined;
+  DinnerTime: undefined;
+  BodyCheck: undefined;
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<StackScreenList>();
 
 export default function InitContainer(): JSX.Element {
   const isLoggedIn = false;
   const isSignedUp = false;
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {isSignedUp ? (
-          isLoggedIn ? (
-            <Stack.Group>
-              <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
-            </Stack.Group>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {isSignedUp ? (
+            isLoggedIn ? (
+              <Stack.Group>
+                <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+              </Stack.Group>
+            ) : (
+              <Stack.Group>
+                <Stack.Screen
+                  name="Login"
+                  component={LoginScreen}></Stack.Screen>
+              </Stack.Group>
+            )
           ) : (
             <Stack.Group>
-              <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
+              <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}></Stack.Screen>
+              <Stack.Screen
+                name="Verify"
+                component={VerifyPhoneNumber}></Stack.Screen>
+              <Stack.Screen
+                name="NameInput"
+                component={NameInput}></Stack.Screen>
+              <Stack.Screen
+                name="GenderInput"
+                component={GenderInput}
+                initialParams={{name: "John Doe"}}></Stack.Screen>
+              <Stack.Screen name="AgeInput" component={AgeInput}></Stack.Screen>
+              <Stack.Screen
+                name="GetupTime"
+                component={GetupTime}></Stack.Screen>
+              <Stack.Screen
+                name="BreakfastTime"
+                component={BreakfastTime}></Stack.Screen>
+              <Stack.Screen
+                name="LunchTime"
+                component={LunchTime}></Stack.Screen>
+              <Stack.Screen
+                name="DinnerTime"
+                component={DinnerTime}></Stack.Screen>
+              <Stack.Screen
+                name="BodyCheck"
+                component={BodyCheck}></Stack.Screen>
             </Stack.Group>
-          )
-        ) : (
-          <Stack.Group>
-            <Stack.Screen name="SignUp" component={SignUpScreen}></Stack.Screen>
-            <Stack.Screen
-              name="Verify"
-              component={VerifyPhoneNumber}></Stack.Screen>
-            <Stack.Screen name="NameInput" component={NameInput}></Stack.Screen>
-            <Stack.Screen
-              name="GenderInput"
-              component={GenderInput}></Stack.Screen>
-            <Stack.Screen name="AgeInput" component={AgeInput}></Stack.Screen>
-            <Stack.Screen name="GetupTime" component={GetupTime}></Stack.Screen>
-            <Stack.Screen
-              name="BreakfastTime"
-              component={BreakfastTime}></Stack.Screen>
-            <Stack.Screen name="LunchTime" component={LunchTime}></Stack.Screen>
-            <Stack.Screen
-              name="DinnerTime"
-              component={DinnerTime}></Stack.Screen>
-            <Stack.Screen name="BodyCheck" component={BodyCheck}></Stack.Screen>
-          </Stack.Group>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 }

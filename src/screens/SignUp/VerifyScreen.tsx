@@ -1,13 +1,45 @@
 import {useState} from "react";
 import {Button, StyleSheet, Text, TextInput, View} from "react-native";
+import {apiInstance} from "../../api/instance";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {StackScreenList} from "../InitContainer";
+import {useNavigation} from "@react-navigation/native";
 
 export default function VerifyPhoneNumber() {
-  const [phoneNumber, onChangeNumber] = useState<string>();
+  const [phoneNumber, onChangeNumber] = useState<string>("");
   const [codeInput, onChangeCodeInput] = useState<string>();
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  const verifyNumber = () => {
-    setIsVisible(true);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<StackScreenList, "Verify">>();
+
+  const verifyNumber = async () => {
+    try {
+      const response = await apiInstance.post("/auth/make", {
+        phone: phoneNumber,
+      });
+      setIsVisible(true);
+      return response.data;
+    } catch (error: any) {
+      throw new Error("Error during verifying number: " + error.message);
+    }
+  };
+
+  const VerifyCode = async () => {
+    try {
+      const response = await apiInstance.post("/auth/verification", {
+        phone: phoneNumber,
+        inputCode: codeInput,
+      });
+      return response.data;
+    } catch (error: any) {
+      throw new Error("Failed to verify the code" + error.message);
+    }
+  };
+
+  const handleSubmit = () => {
+    //회원가입이 완료되었습니다 팝업 확인버튼에 들어갈 함수
+    navigation.navigate("NameInput");
   };
 
   return (
@@ -19,7 +51,6 @@ export default function VerifyPhoneNumber() {
       <View>
         <Text>휴대전화 번호</Text>
         <TextInput value={phoneNumber} onChangeText={onChangeNumber} />
-
         <View
           style={[
             styles.verifyContainer,
@@ -37,8 +68,8 @@ export default function VerifyPhoneNumber() {
         </View>
         {isVisible ? (
           <View>
-            <Button title="확인" onPress={verifyNumber} />
-            <Button title="취소" onPress={verifyNumber} />
+            <Button title="확인" onPress={VerifyCode} />
+            <Button title="취소" />
           </View>
         ) : (
           <Button title="인증번호 받기" onPress={verifyNumber} />
