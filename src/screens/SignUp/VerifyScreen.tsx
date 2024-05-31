@@ -14,14 +14,19 @@ export default function VerifyPhoneNumber() {
     useNavigation<NativeStackNavigationProp<StackScreenList, "Verify">>();
 
   const verifyNumber = async () => {
+    const data = new FormData();
+    data.append("phone", phoneNumber);
     try {
-      const response = await apiInstance.post("/auth/make", {
-        phone: phoneNumber,
+      const response = await apiInstance.post("/auth/make", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       setIsVisible(true);
       return response.data;
     } catch (error: any) {
-      throw new Error("Error during verifying number: " + error.message);
+      console.log("Error during verifying number:", error);
+      throw new Error("Error" + error);
     }
   };
 
@@ -50,7 +55,11 @@ export default function VerifyPhoneNumber() {
       </View>
       <View>
         <Text>휴대전화 번호</Text>
-        <TextInput value={phoneNumber} onChangeText={onChangeNumber} />
+        <TextInput
+          value={phoneNumber}
+          keyboardType="numeric"
+          onChangeText={onChangeNumber}
+        />
         <View
           style={[
             styles.verifyContainer,
