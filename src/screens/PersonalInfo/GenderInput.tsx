@@ -4,6 +4,7 @@ import {StackScreenList} from "../InitContainer";
 import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
 import {useState} from "react";
 import {useUserContext} from "../../context/UserContext";
+import { inputStyles } from "./NameInput";
 
 export default function GenderInput() {
   const [gender, setGender] = useState("");
@@ -17,8 +18,8 @@ export default function GenderInput() {
   };
 
   return (
-    <View>
-      <Text>당신의 성별을 알려주세요</Text>
+    <View style={inputStyles.container}>
+      <Text style={inputStyles.title}>당신의 성별을 알려주세요</Text>
       <Button title="남성" />
       <Button title="여성" />
       <Button title="다음" onPress={handleNext} />

@@ -6,6 +6,7 @@ import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {StackScreenList} from "../InitContainer";
 import {useUserContext} from "../../context/UserContext";
 import {apiInstance} from "../../api/instance";
+import { inputStyles } from "./NameInput";
 
 export default function AgeInput() {
   const [selectedAge, setSelectedAge] = useState();
@@ -30,8 +31,8 @@ export default function AgeInput() {
   };
 
   return (
-    <View>
-      <Text>당신의 나이를 알려주세요</Text>
+    <View style={inputStyles.container}>
+      <Text style={inputStyles.title}>당신의 나이를 알려주세요</Text>
       <Picker
         selectedValue={selectedAge}
         onValueChange={(itemValue, itemIndex) => setSelectedAge(itemValue)}>
@@ -46,7 +47,7 @@ export default function AgeInput() {
         <Picker.Item label="20" value="20" />
         <Picker.Item label="20" value="20" />
       </Picker>
-      <Button title="다음" onPress={handleSubmit} />
+      <Button title="다음" onPress={() => navigation.navigate("GetupTime")}  />
     </View>
   );
 }
